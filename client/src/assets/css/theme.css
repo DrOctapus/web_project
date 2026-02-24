@@ -1,0 +1,118 @@
+/* --- Global Aesthetics --- */
+body {
+    font-family: Arial, sans-serif;
+    color: #000;
+    background-color: #b6b6b6;
+}
+
+/* --- Header & Navigation Colors --- */
+.header-bar {
+    background-color: #563232;
+}
+
+.header-bar h1 {
+    color: #ffffff;
+}
+
+.header-bar span {
+    color: #000;
+}
+
+/* Top Menu */
+.topnav {
+    background-color: #c9c9c9;
+}
+
+.topnav a {
+    color: #000000;
+}
+
+.topnav a:hover {
+    background-color: #444444 !important;
+    border: 2px solid #000000;
+    color: #efefef;
+    border-radius: 5px;
+}
+
+.topnav a.active {
+    background-color: #572727 !important;
+    border: 3px solid #482424 !important;
+    color: white !important;
+    border-radius: 5px;
+}
+
+/* Side Menu */
+.sidenav {
+    background-color: #7f7f7f;
+}
+
+.sidenav a {
+    color: #121111;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav a.active {
+    background-color: #5c5c5b;
+    color: white;
+}
+
+.main-content div {
+    color: #000;
+}
+
+/* Filter Menus */
+.filters {
+    color: #000;
+    background-color: #c4c4c4;
+}
+
+.filter-list {
+    background-color: #c4c4c4;
+}
+
+.expanded-filter-list {
+    background-color: #b6b6b6;
+}
+
+.expanded-filter-list :hover {
+    background-color: #e5e5e5;
+}
+
+/* Component Aesthetics */
+.dropbtn {
+    background-color: #a0a0a0;
+    color: #000;
+}
+
+.expanded-filter:hover .dropbtn {
+    background-color: #626262;
+}
+
+.search-container input[type=text] {
+    border: 1px solid #5c5c5b;
+}
+
+.search-container button {
+    background: #b55656;
+}
+
+.search-container button:hover {
+    background: #ccc;
+}
+
+.suggested-menu a {
+    background-color: #c9c9c9;
+    color: #000;
+}
+
+.suggested-menu a:hover {
+    background-color: #616161;
+    color: #fff;
+}
+
+.search-container input[type=text]:focus {
+    border-color: #853b3b;
+}

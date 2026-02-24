@@ -1,0 +1,173 @@
+<div class="page-container">
+    <div class="card">
+        <h2>Create Account</h2>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            @if (currentStep() === 1) {
+            <div class="step">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" formControlName="email" placeholder="name@example.com"
+                    [class.invalid]="f.email.invalid && f.email.touched">
+
+                @if (f.email.invalid && f.email.touched) {
+                <p class="error-msg">Please enter a valid email address.</p>
+                }
+
+                <button type="button" class="btn-main" (click)="nextStep()">Continue</button>
+            </div>
+            }
+
+            @if (currentStep() === 2) {
+            <div class="step">
+
+                @if (isLoginMode()) {
+                <h3>Welcome Back!</h3>
+                <p>Please enter your password to log in.</p>
+
+                <div class="password-wrapper">
+                    <input [type]="passwordVisible() ? 'text' : 'password'" formControlName="password"
+                        placeholder="Enter your password">
+                    <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                        {{ passwordVisible() ? '❌' : '👁️' }}
+                    </button>
+                </div>
+
+                @if (loginError()) {
+                    <p class="error-msg" style="margin-top: 5px;">{{ loginError() }}</p>
+                }
+
+                <div class="btn-group">
+                    <button type="button" class="btn-main" (click)="onLogin()">Log In</button>
+                    <button type="button" class="btn-secondary" (click)="prevStep()">Back</button>
+                </div>
+                }
+
+                @else {
+                <p>Create a secure password.</p>
+
+                <div class="password-wrapper">
+                    <input [type]="passwordVisible() ? 'text' : 'password'" formControlName="password"
+                        placeholder="Password">
+                    <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                        {{ passwordVisible() ? '❌' : '👁️' }}
+                    </button>
+                </div>
+
+                <div class="step">
+                    @let val = f.password.value || '';
+                    <ul class="requirements-list">
+                        <li [class.valid]="val.length >= 8">At least 8 characters</li>
+                        <li [class.valid]="val.match('[a-z]')">At least one lowercase letter</li>
+                        <li [class.valid]="val.match('[A-Z]')">At least one uppercase letter</li>
+                        <li [class.valid]="val.match('\\d')">At least one number</li>
+                    </ul>
+                </div>
+
+                <input type="password" formControlName="confirmPassword" placeholder="Confirm Password"
+                    [class.invalid]="registerForm.hasError('mismatch') && f.confirmPassword.touched">
+
+                @if (registerForm.hasError('mismatch') && f.confirmPassword.touched) {
+                <p class="error-msg">Passwords do not match.</p>
+                }
+
+                <div class="btn-group">
+                    <button type="button" class="btn-main" (click)="nextStep()">Next</button>
+                    <button type="button" class="btn-secondary" (click)="prevStep()">Back</button>
+                </div>
+                }
+            </div>
+            }
+
+            @if (currentStep() === 3) {
+            <div class="step">
+                <h3>Tell us about you</h3>
+
+                <div class="row">
+                    <div class="col">
+                        <label>First Name</label>
+                        <input type="text" formControlName="fname" [class.invalid]="f.fname.invalid && f.fname.touched">
+                    </div>
+                    <div class="col">
+                        <label>Last Name</label>
+                        <input type="text" formControlName="lname" [class.invalid]="f.lname.invalid && f.lname.touched">
+                    </div>
+                </div>
+
+                <label>Date of Birth</label>
+                <input type="date" formControlName="dateOfBirth"
+                    [class.invalid]="f.dateOfBirth.invalid && f.dateOfBirth.touched">
+
+                @if (f.dateOfBirth.errors?.['tooYoung']) {
+                <p class="error-msg">You must be at least 16 years old.</p>
+                }
+                @if (f.dateOfBirth.errors?.['tooOld']) {
+                <p class="error-msg">Seems unlikely.</p>
+                }
+
+                <div class="btn-group">
+                    <button type="button" class="btn-main" (click)="nextStep()">Next: Interests</button>
+                    <button type="button" class="btn-secondary" (click)="prevStep()">Back</button>
+                </div>
+            </div>
+            }
+
+            @if (currentStep() === 4) {
+            <div class="step">
+                <h3>Customize your Feed</h3>
+
+                <label><strong>Experience Level:</strong></label>
+                <div class="radio-group">
+                    <label><input type="radio" formControlName="skillLevel" value="1"> Beginner</label>
+                    <label><input type="radio" formControlName="skillLevel" value="2"> Intermediate</label>
+                    <label><input type="radio" formControlName="skillLevel" value="3"> Advanced</label>
+                </div>
+
+                <label style="margin-top: 15px; display:block;"><strong>I am interested in:</strong></label>
+                <div class="checkbox-group">
+                    @for (cat of categories(); track cat._id) {
+                    <label>
+                        <input type="checkbox" [value]="cat._id" (change)="onCategoryChange(cat._id, $event)">
+                        {{ cat.name }}
+                    </label>
+                    }
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-main" (click)="nextStep()">Review & Submit</button>
+                    <button type="button" class="btn-secondary" (click)="prevStep()">Back</button>
+                </div>
+            </div>
+            }
+
+            @if (currentStep() === 5) {
+            <div class="step">
+                <h3>Confirm Details</h3>
+
+                <div class="summary-box">
+                    <h4>Personal Details</h4>
+                    <p><strong>Name:</strong> {{ f.fname.value }} {{ f.lname.value }}</p>
+                    <p><strong>Email:</strong> {{ f.email.value }}</p>
+                    <p><strong>Date of Birth:</strong> {{ f.dateOfBirth.value }}</p>
+                    <hr>
+                    <h4>Preferences</h4>
+                    <p><strong>Level:</strong> {{ skillLevelLabel }}</p>
+                    <p><strong>Interests:</strong> {{ selectedCategoryNames }}</p>
+                </div>
+
+                <label class="terms-label">
+                    <input type="checkbox" formControlName="terms">
+                    I agree to the <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Terms &
+                        Conditions</a>
+                </label>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-main" [disabled]="registerForm.invalid">Create Account</button>
+                    <button type="button" class="btn-secondary" (click)="prevStep()">Edit</button>
+                </div>
+            </div>
+            }
+
+        </form>
+    </div>
+</div>

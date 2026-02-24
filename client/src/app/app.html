@@ -1,0 +1,43 @@
+<header class="header-bar">
+  <div class="logo-title">
+    <span class="sidenav-btn" (click)="toggleMenu()">☰</span>
+    <a routerLink="/">
+      <img class="logo" src="assets/img/logo.png" width="48" height="48">
+    </a>
+    <h1>Book & Byte</h1>
+  </div>
+</header>
+
+<nav class="topnav">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+  <a routerLink="/courses" routerLinkActive="active">Courses</a>
+  <a routerLink="/books" routerLinkActive="active">Books</a>
+  <a routerLink="/about" routerLinkActive="active">About</a>
+
+  @if (authService.currentUser(); as user) {
+  <a style="cursor: pointer" (click)="logout()">
+    Sign Out {{ user.fname}}
+  </a>
+  } @else {
+  <a routerLink="/register" routerLinkActive="active">Sign Up / Sign In</a>
+  }
+</nav>
+
+<div class="sidenav" [class.open]="isMenuOpen()">
+  <a class="closebtn" (click)="toggleMenu()">×</a>
+  <a routerLink="/" (click)="closeMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+  <a routerLink="/courses" (click)="closeMenu()" routerLinkActive="active">Courses</a>
+  <a routerLink="/books" (click)="closeMenu()" routerLinkActive="active">Books</a>
+  <a routerLink="/about" (click)="closeMenu()" routerLinkActive="active">About Us</a>
+  @if (authService.currentUser()) {
+  <a (click)="logout()">Sign Out</a>
+  } @else {
+  <a routerLink="/register" (click)="closeMenu()" routerLinkActive="active">Sign Up / Sign In</a>
+  }
+</div>
+
+<div id="overlay" [class.active]="isMenuOpen()" (click)="toggleMenu()"></div>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

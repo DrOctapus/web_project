@@ -1,0 +1,248 @@
+/*  Layout for diffrent screen sizes */
+/* phone: 480px, tablet 768px, laptop 1024px */
+
+main {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh
+}
+
+.header-bar {
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: start;
+    padding: 1% 5%;
+}
+
+.header-bar h1 {
+    margin: auto 10vh;
+    text-align: center;
+    min-width: 20vw;
+}
+
+.header-bar span {
+    float: left;
+}
+
+/* Mobile < 768px - 1 Στήλη */
+.main-content-fluid,
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    gap: 20px;
+}
+
+html {
+    font-size: 1.2rem;
+}
+
+/* Side menu navigation */
+.topnav {
+    display: none;
+}
+
+.sidenav-btn {
+    font-size: 175%;
+    cursor: pointer;
+    display: block;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.sidenav {
+    display: block;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: #7f7f7f;
+    overflow-x: hidden;
+    transition: 0.2s;
+    padding-top: 60px;
+}
+
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #121111;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav a.active {
+    background-color: #5c5c5b;
+    color: white;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.open {
+    width: 60vw;
+}
+
+.filters.open {
+    width: 60vw;
+}
+
+.closebtn:hover {
+    cursor: pointer;
+}
+
+/* Tablet < 1024px - 2 Στήλες */
+@media screen and (min-width: 768px) {
+
+    .main-content-fluid,
+    .main-content {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .main-content-fluid> :last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+
+    .header-bar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 1% 5%;
+    }
+
+    .open {
+        width: 45vw;
+    }
+
+    .filters.open {
+        width: 45vw;
+    }
+
+    .category-list-section {
+        max-width: 75%;
+    }
+
+    .category-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .category-links li {
+        width: auto;
+    }
+
+    .category-link {
+        min-width: 150px;
+    }
+
+    .book-container {
+        flex-direction: row;
+        align-items: start;
+        text-align: left;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .book-img {
+        width: 120px;
+        height: 160px;
+        margin-bottom: 0;
+    }
+
+    .book-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .book-secondary-info {
+        justify-content: flex-start;
+        padding-top: 10px;
+    }
+}
+
+/* Desktop - 3 Στήλες*/
+@media screen and (min-width: 1024px) {
+
+    .main-content-fluid,
+    .main-content {
+        grid-template-columns: 1fr 1fr 1fr;
+        max-width: 1300px;
+    }
+
+    .main-content-fluid> :last-child:nth-child(odd) {
+        grid-column: auto;
+    }
+
+    .main-content-fluid> :last-child:nth-child(3n + 1) {
+        grid-column: 1 / -1;
+    }
+
+    html {
+        font-size: 1rem;
+    }
+
+    .open {
+        width: 30vw;
+    }
+
+    .filters.open {
+        width: 30vw;
+    }
+
+    /* Top menu navigation */
+    .topnav {
+        display: flex;
+        width: 100%;
+        background-color: #c9c9c9;
+        overflow: auto;
+    }
+
+    .topnav a {
+        color: #000000;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 20px;
+    }
+
+    .topnav a:hover {
+        background-color: #363636;
+        color: #efefef;
+    }
+
+    .topnav a.active {
+        background-color: #5c5c5b;
+        color: white;
+    }
+
+    .topnav a:last-child {
+        margin-left: auto;
+    }
+
+    .sidenav-btn {
+        display: none;
+    }
+
+    .sidenav {
+        display: none;
+    }
+}

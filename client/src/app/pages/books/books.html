@@ -1,0 +1,127 @@
+<div class="page-container">
+    <header class="header-bar">
+        <h1>Books</h1>
+        <div class="toolbar">
+            <nav class="search-container">
+                <input type="text" placeholder="Search..." 
+                       [(ngModel)]="stagedSearchQuery" 
+                       (keyup.enter)="applyFilters()"
+                       name="search">
+                <div class="btn-text">
+                    <p class="hide">Search</p>
+                    <button (click)="applyFilters()">
+                        <img src="assets/img/search-icon.png" style="width:19px; height:19px" alt="Search">
+                    </button>
+                </div>
+            </nav>
+            
+            <div class="btn-text">
+                <p class="hide">Filters</p>
+                <button class="filters-btn" (click)="toggleFilters()">
+                    <img class="filter-icon" src="assets/img/filter-icon.png" alt="Filter">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <aside class="filters" id="filtersList" [class.open]="isFilterMenuOpen()">
+        <h2>Filters</h2>
+        <a class="closebtn" (click)="closeFilters()">×</a>
+        
+        <ul class="filter-list">
+            <li class="regular-filter">
+                <label>
+                    <input type="checkbox" [(ngModel)]="stagedOnlyAvailable"> Available Only
+                </label>
+            </li>
+
+            <li class="regular-filter">
+                <div class="filter-header">
+                    <input type="checkbox" id="enableYearFilter" [(ngModel)]="stagedEnableYearFilter">
+                    <label for="enableYearFilter">Published up to: <span>{{ stagedYear() }}</span></label>
+                </div>
+                <input type="range" 
+                       [min]="minYearAvailable()" 
+                       [max]="maxYearAvailable()" 
+                       [(ngModel)]="stagedYear" 
+                       [disabled]="!stagedEnableYearFilter()">
+            </li>
+
+            <li class="expanded-filter">
+                <button class="dropbtn">Courses</button>
+                <ul class="expanded-filter-list">
+                    @for (course of allCourses(); track course._id) {
+                        <li>
+                            <label>
+                                <input type="checkbox" 
+                                       [value]="course._id" 
+                                       [checked]="stagedCourses().has(course._id)"
+                                       (change)="toggleCourse(course._id, $event)"> 
+                                {{ course.title }}
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </li>
+
+            <li class="expanded-filter">
+                <button class="dropbtn">Publishers</button>
+                <ul class="expanded-filter-list">
+                    @for (pub of uniquePublishers(); track pub) {
+                        <li>
+                            <label>
+                                <input type="checkbox" 
+                                       [value]="pub" 
+                                       [checked]="stagedPublishers().has(pub)"
+                                       (change)="togglePublisher(pub, $event)"> 
+                                {{ pub }}
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+
+        <button class="apply" (click)="applyFilters()">Apply</button>
+        <button class="apply clear-btn" (click)="resetFilters()">Clear</button>
+    </aside>
+
+    <ul class="books-container main-content" id="booksList">
+        @if (filteredBooks().length === 0) {
+            <p style="padding: 20px;">No books found matching your criteria.</p>
+        }
+
+        @for (book of filteredBooks(); track book._id) {
+            <li class="book-container">
+                <img class="book-img" 
+                     [src]="'http://localhost:5000/img/' + book.coverImage" 
+                     [alt]="book.title">
+                
+                <div class="book-info">
+                    <div class="book-important-info">
+                        <h3 class="book-title">{{ book.title }}</h3>
+                        <p class="book-desc">{{ book.description }}</p>
+                    </div>
+                    
+                    <div class="book-secondary-info">
+                        <p class="book-publisher">{{ book.publisher }}</p>
+                        
+                        <p class="book-course"><strong>Course:</strong> 
+                            @for (c of book.course; track c._id) {
+                                <a [routerLink]="['/course-details', c._id || c]" 
+                                   style="text-decoration: none; margin-right: 5px;">
+                                   {{ c.title || 'View Course' }}
+                                </a>
+                            }
+                        </p>
+                        
+                        <p class="book-publication-year">Published: {{ book.publicationYear }}</p>
+                        <p class="book-availability">In Stock: {{ book.stock }}</p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<div id="overlay" [class.active]="isFilterMenuOpen()" (click)="closeFilters()"></div>

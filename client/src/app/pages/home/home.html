@@ -1,0 +1,30 @@
+<main class="main-content-fluid">
+    <section class="welcome-section">
+        <h2>Welcome!</h2>
+        <p>Welcome to Book & Byte, your digital gateway to mastering Computer Science, Business, and Design. We bridge
+            the gap between academic theory and practical application by curating the best university-level courses
+            alongside the essential textbooks required to master them. Whether you are a student or a lifelong learner,
+            find the knowledge you need to turn the page and start coding.</p>
+    </section>
+    <nav class="category-list-section">
+        <h2>Browse Courses by Category</h2>
+        <ul id="category-list" class="category-links">
+            @for (cat of categories(); track cat._id) {
+            <li>
+                <a [routerLink]="['/courses']" [queryParams]="{ courseCategory: cat._id }" class="category-link">
+                    {{ cat.name }}
+                </a>
+            </li>
+            }
+        </ul>
+    </nav>
+    <article class="suggested-menu-container" #horizontalMenuContainer>
+        <ul class="suggested-menu" id="suggestionsMenu">
+            @for (book of suggestedBooks(); track book._id) {
+            <li>
+                <img [src]="'http://localhost:5000/img/' + book.coverImage">
+            </li>
+            }
+        </ul>
+    </article>
+</main>

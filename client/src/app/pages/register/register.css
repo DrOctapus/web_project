@@ -1,0 +1,85 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+h2, h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input.invalid {
+  border-color: #dc3545;
+}
+
+.error-msg {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Password Requirements List */
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.requirements-list li::before {
+  content: "✖ ";
+  color: #dc3545;
+}
+
+.requirements-list li.valid {
+  color: #28a745;
+}
+
+.requirements-list li.valid::before {
+  content: "✔ ";
+  color: #28a745;
+}

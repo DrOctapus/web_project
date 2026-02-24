@@ -1,0 +1,8 @@
+.filters {
+  z-index: 1001;
+  position: fixed;
+}
+
+#overlay {
+  z-index: 1000;
+}

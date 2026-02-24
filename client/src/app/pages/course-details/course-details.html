@@ -1,0 +1,58 @@
+<div class="page-container" id="courseDetailsContainer">
+  @if (course()) {
+    
+    <div class="course-info">
+        
+        <h1 id="courseTitle">{{ course().title }}</h1>
+
+        <div class="course-meta-tags">
+            <span class="badge" style="background:#745151ff">
+                {{ getCategoryName(course()) }}
+            </span>
+            
+            <span class="badge" 
+                  [style.background]="getDifficultyColor(course().difficulty)">
+                {{ getDifficultyLabel(course().difficulty) }}
+            </span>
+        </div>
+
+        <p class="teacher-name">Taught by <strong>{{ course().teacher }}</strong></p>
+        <p class="duration-info">Duration: {{ course().duration }} Weeks</p>
+    </div>
+
+    <div class="course-description-section">
+        <h2>About this Course</h2>
+        <p>{{ course().description }}</p>
+    </div>
+
+    @if (course().books && course().books.length > 0) {
+      <div class="related-books">
+          <h3>Available Books</h3>
+          <div class="books-horizontal-list">
+              
+              @for (book of course().books; track book._id) {
+                <div class="book-scroll-item">
+                    <img class="book-img" 
+                         [src]="'http://localhost:5000/img/' + book.coverImage" 
+                         [alt]="book.title">
+                    
+                    <div class="book-info">
+                        <h3 class="book-title" style="font-size:1rem">{{ book.title }}</h3>
+                        <p class="book-desc" style="line-clamp:2; -webkit-line-clamp:2">{{ book.description }}</p>
+                        
+                        <div class="book-secondary-info" style="justify-content:flex-start">
+                           </div>
+                    </div>
+                </div>
+              }
+
+          </div>
+      </div>
+    } @else {
+      <p>No textbooks required for this course.</p>
+    }
+
+  } @else {
+    <p>Loading course details...</p>
+  }
+</div>
